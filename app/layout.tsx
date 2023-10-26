@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import ThemeProvider from "@/context/theme-provider";
+import { ThemeProvider } from "@/context/theme-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,8 +28,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
-          <ThemeProvider>{children}</ThemeProvider>
+        <body className={`${inter.variable} ${spaceGrotesk.variable} `}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
