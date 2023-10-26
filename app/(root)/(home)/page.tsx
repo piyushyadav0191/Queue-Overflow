@@ -1,14 +1,19 @@
 import HomeFilters from "@/components/home/HomeFilters";
 import Filters from "@/components/shared/Filters";
+import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import Link from "next/link";
 import React from "react";
 
-type Props = {};
+const questions = [
+  // {_id: 1, title: "How to use React Query?", tags: [{_id:1, name: "react"}, {_id: 2, name: "sql"}], author: "Piyush yadav", upvotes: 10, views: 100, answers:2, createdAt: "2023-09-01T12:00:00.000Z" },
+  // {_id: 2, title: "How to use React Query?", tags: [{_id:1, name: "react"}, {_id: 2, name: "sql"}], author: "Piyush yadav", upvotes: 10, views: 100, answers:2, createdAt: "2023-09-01T12:00:00.000Z" },
+  // {_id: 3, title: "How to use React Query?", tags: [{_id:1, name: "react"}, {_id: 2, name: "sql"}], author: "Piyush yadav", upvotes: 10, views: 100, answers:2, createdAt: "2023-09-01T12:00:00.000Z" },
+];
 
-const Home = (props: Props) => {
+const Home = () => {
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -34,6 +39,17 @@ const Home = (props: Props) => {
         />
       </div>
       <HomeFilters />
+      <div className="mt-10 flex w-full flex-col gap-6 ">
+        {questions.length > 0 ? (
+          questions.map(
+            (question) =>
+              // <QuestionCard />
+              "questions"
+          )
+        ) : (
+          <NoResult />
+        )}
+      </div>
     </>
   );
 };

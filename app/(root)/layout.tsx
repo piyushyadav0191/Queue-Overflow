@@ -20,7 +20,6 @@ const layout = ({ children }: Props) => {
         </section>
         <RIghtSidebar />
       </div>
-      Toaster
     </main>
   );
 };
