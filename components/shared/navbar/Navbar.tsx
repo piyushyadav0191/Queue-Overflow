@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Theme from "./Theme";
+import MobileNav from "./MobileNav";
+import GlobalSearch from "../search/GlobalSearch";
 
 type Props = {};
 
@@ -20,7 +22,7 @@ const Navbar = (props: Props) => {
           Queue <span className="text-primary-500">Overflow</span>
         </p>
       </Link>
-      GlobalSearch
+      <GlobalSearch />
       <div className="flex-between gap-5">
         <Theme />
         <SignedIn>
@@ -36,6 +38,7 @@ const Navbar = (props: Props) => {
             }}
           />
         </SignedIn>
+        <MobileNav />
       </div>
     </nav>
   );

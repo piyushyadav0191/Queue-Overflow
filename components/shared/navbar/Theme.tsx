@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Menubar,
   MenubarContent,
@@ -15,15 +15,20 @@ type Props = {};
 
 const Theme = (props: Props) => {
   const { setTheme, theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  React.useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
   return (
     <Menubar className="relative border-none bg-transparent shadow-none">
       <MenubarMenu>
         <MenubarTrigger>
           {theme === "dark" ? (
-            // <MoonIcon className="w-6 h-6 text-dark-100 dark:text-light-900 bg-primary-500" />
-            <Image src={"/images/moon.svg"} width={20} height={20} alt="Moon" />
+            <Image src={"/images/moon.svg"} width={20} height={20} alt="moon" />
           ) : (
-            <Image src={"/images/sun.svg"} width={20} height={20} alt="Sun" />
+            <Image src={"/images/sun.svg"} width={20} height={20} alt="sun" />
           )}
         </MenubarTrigger>
         <MenubarContent className="absolute right-[-3rem] mt-4 min-w-[120px] rounded border py-2 dark:border-dark-400 dark:bg-dark-300">
