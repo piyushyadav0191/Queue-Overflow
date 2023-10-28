@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { QuestionFormSchema } from "@/lib/validations";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
+import { createQuestion } from "@/lib/actions/question.action";
 
 const type: any = "create";
 
@@ -36,9 +37,10 @@ const Question = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof QuestionFormSchema>) {
+  async function onSubmit(values: z.infer<typeof QuestionFormSchema>) {
     setIsSubmitting(true);
     try {
+      await createQuestion();
     } catch (error) {
     } finally {
       setIsSubmitting(false);
@@ -120,7 +122,9 @@ const Question = () => {
                   apiKey={process.env.NEXT_PUBLIC_TINYCLOUD_API_KEY}
                   //@ts-ignore
                   onInit={(evt, editor) => (editorRef.current = editor)}
-                  initialValue="<p>This is the initial content of the editor.</p>"
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
+                  initialValue=""
                   init={{
                     height: 350,
                     menubar: false,
