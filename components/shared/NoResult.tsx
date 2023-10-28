@@ -3,9 +3,14 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
 
-type Props = {};
+type Props = {
+  title: string;
+  description: string;
+  link: string;
+  linkTitle: string;
+};
 
-const NoResult = (props: Props) => {
+const NoResult = ({ title, description, link, linkTitle }: Props) => {
   return (
     <div className="mt-10 flex w-full flex-col items-center justify-center">
       <Image
@@ -15,14 +20,11 @@ const NoResult = (props: Props) => {
         className="block object-contain dark:flex"
         alt=""
       />
-      <h2 className="font-bold text-xl mt-8">There's no question to show</h2>
-      <p className="text-md  my-3.5 max-w-md text-center">
-        Be the first to break the silence! Ask a question and kickstart the
-        discussion. Our query could be next big thing others learn from{" "}
-      </p>
-      <Link href={"/"}>
+      <h2 className="font-bold text-xl mt-8">{title} </h2>
+      <p className="text-md  my-3.5 max-w-md text-center">{description}</p>
+      <Link href={link}>
         <Button className="mt-3 min-h-[46px] rounded-lg bg-primary-500 px-3 py-3 font-semibold">
-          Ask a Question
+          {linkTitle}
         </Button>
       </Link>
     </div>

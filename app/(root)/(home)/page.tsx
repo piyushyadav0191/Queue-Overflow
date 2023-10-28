@@ -1,3 +1,4 @@
+import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilters from "@/components/home/HomeFilters";
 import Filters from "@/components/shared/Filters";
 import NoResult from "@/components/shared/NoResult";
@@ -8,9 +9,57 @@ import Link from "next/link";
 import React from "react";
 
 const questions = [
-  // {_id: 1, title: "How to use React Query?", tags: [{_id:1, name: "react"}, {_id: 2, name: "sql"}], author: "Piyush yadav", upvotes: 10, views: 100, answers:2, createdAt: "2023-09-01T12:00:00.000Z" },
-  // {_id: 2, title: "How to use React Query?", tags: [{_id:1, name: "react"}, {_id: 2, name: "sql"}], author: "Piyush yadav", upvotes: 10, views: 100, answers:2, createdAt: "2023-09-01T12:00:00.000Z" },
-  // {_id: 3, title: "How to use React Query?", tags: [{_id:1, name: "react"}, {_id: 2, name: "sql"}], author: "Piyush yadav", upvotes: 10, views: 100, answers:2, createdAt: "2023-09-01T12:00:00.000Z" },
+  {
+    title: "Sample Question",
+    tags: [
+      { _id: "1", name: "tag1" },
+      { _id: "2", name: "tag2" },
+    ],
+    _id: "12345",
+    author: {
+      _id: "123",
+      name: "John Doe",
+      picture: "/images/profile.svg",
+    },
+    upvotes: 42,
+    views: 789,
+    answers: [],
+    createdAt: "2023-10-28T08:00:00",
+  },
+  {
+    title: "Another Question",
+    tags: [
+      { _id: "3", name: "tag3" },
+      { _id: "4", name: "tag4" },
+    ],
+    _id: "67890",
+    author: {
+      _id: "456",
+      name: "Jane Doe",
+      picture: "/images/profile.svg",
+    },
+    upvotes: 12,
+    views: 456,
+    answers: [],
+    createdAt: "2023-10-27T14:30:00",
+  },
+  {
+    title: "Third Question",
+    tags: [
+      { _id: "5", name: "tag5" },
+      { _id: "6", name: "tag6" },
+    ],
+    _id: "54321",
+    author: {
+      _id: "789",
+      name: "John Smith",
+      picture: "/images/profile.svg",
+    },
+    upvotes: 56,
+    views: 234,
+    answers: [],
+    createdAt: "2023-10-26T20:15:00",
+  },
 ];
 
 const Home = () => {
@@ -18,7 +67,7 @@ const Home = () => {
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
         <h1 className="font-bold text-3xl">All Questions</h1>
-        <Link href="/ask-questions" className="flex justify-end max-sm:w-full">
+        <Link href="/ask-question" className="flex justify-end max-sm:w-full">
           <Button className="bg-primary-500 font-bold min-h-[46px] px-4 py-3 text-light-900">
             Ask a Question
           </Button>
@@ -41,13 +90,28 @@ const Home = () => {
       <HomeFilters />
       <div className="mt-10 flex w-full flex-col gap-6 ">
         {questions.length > 0 ? (
-          questions.map(
-            (question) =>
-              // <QuestionCard />
-              "questions"
-          )
+          questions.map((question) => (
+            <QuestionCard
+              key={question._id}
+              _id={question._id}
+              title={question.title}
+              tags={question.tags}
+              author={question.author}
+              upvotes={question.upvotes}
+              views={question.views}
+              createdAt={question.createdAt}
+              answers={question.answers}
+            />
+          ))
         ) : (
-          <NoResult />
+          <NoResult
+            title={"There's no question to show"}
+            description={
+              " Be the first to break the silence! Ask a question and kickstart the discussion. Our query could be next big thing others learn from"
+            }
+            link={"/ask-question"}
+            linkTitle={"Ask a Question"}
+          />
         )}
       </div>
     </>
