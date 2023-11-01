@@ -8,8 +8,7 @@ import React from "react";
 type Props = {};
 
 const page = async (props: Props) => {
-  // const { userId } = auth();
-  const userId = "123456789";
+  const { userId } = auth();
 
   if (!userId) {
     return redirect("/sign-in");
