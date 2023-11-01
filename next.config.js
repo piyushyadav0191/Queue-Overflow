@@ -5,6 +5,9 @@ const nextConfig = {
     mdxRs: true,
     serverComponentsExternalPackages: ["mongoose"],
   },
+  images: {
+    domains: ["static.vecteezy.com"],
+  },
   typescript: {
     ignoreBuildErrors: true,
   },

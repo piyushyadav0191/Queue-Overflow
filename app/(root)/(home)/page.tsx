@@ -5,64 +5,15 @@ import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
+import { getQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 import React from "react";
 
-const questions = [
-  {
-    title: "Sample Question",
-    tags: [
-      { _id: "1", name: "tag1" },
-      { _id: "2", name: "tag2" },
-    ],
-    _id: "12345",
-    author: {
-      _id: "123",
-      name: "John Doe",
-      picture: "/images/profile.svg",
-    },
-    upvotes: 42,
-    views: 789,
-    answers: [],
-    createdAt: "2023-10-28T08:00:00",
-  },
-  {
-    title: "Another Question",
-    tags: [
-      { _id: "3", name: "tag3" },
-      { _id: "4", name: "tag4" },
-    ],
-    _id: "67890",
-    author: {
-      _id: "456",
-      name: "Jane Doe",
-      picture: "/images/profile.svg",
-    },
-    upvotes: 12,
-    views: 456,
-    answers: [],
-    createdAt: "2023-10-27T14:30:00",
-  },
-  {
-    title: "Third Question",
-    tags: [
-      { _id: "5", name: "tag5" },
-      { _id: "6", name: "tag6" },
-    ],
-    _id: "54321",
-    author: {
-      _id: "789",
-      name: "John Smith",
-      picture: "/images/profile.svg",
-    },
-    upvotes: 56,
-    views: 234,
-    answers: [],
-    createdAt: "2023-10-26T20:15:00",
-  },
-];
+const Home = async () => {
+  const result = await getQuestions();
 
-const Home = () => {
+  console.log(result?.questions);
+
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -89,8 +40,8 @@ const Home = () => {
       </div>
       <HomeFilters />
       <div className="mt-10 flex w-full flex-col gap-6 ">
-        {questions.length > 0 ? (
-          questions.map((question) => (
+        {result?.questions.length > 0 ? (
+          result?.questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}

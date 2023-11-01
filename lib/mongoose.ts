@@ -13,7 +13,9 @@ export const connectToDatabase = async () => {
   }
 
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(process.env.MONGODB_URI, {
+      dbName: "queueoverflow",
+    });
     isConnected = true;
     console.log("MongoDB is connected");
   } catch (error) {
