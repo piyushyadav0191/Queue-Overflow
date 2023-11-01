@@ -6,7 +6,7 @@ const nextConfig = {
     serverComponentsExternalPackages: ["mongoose"],
   },
   images: {
-    domains: ["static.vecteezy.com"],
+    domains: ["static.vecteezy.com", "img.clerk.com"],
   },
   typescript: {
     ignoreBuildErrors: true,
