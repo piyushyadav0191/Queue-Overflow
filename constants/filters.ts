@@ -10,3 +10,9 @@ export const UserFilters = [
   { name: "Old Users", value: "oldusers" },
   { name: "Top contributers", value: "topcontributers" },
 ];
+export const AnswersFilters = [
+  { name: "Highest upvotes", value: "highestupvotes" },
+  { name: "Lowest upvotes", value: "lowestupvotes" },
+  { name: "Most Recent", value: "mostrecent" },
+  { name: "Oldest", value: "oldest" },
+];
