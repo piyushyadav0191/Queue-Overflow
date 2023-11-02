@@ -30,7 +30,7 @@ const page = async (props: Props) => {
           otherClasses="min-h-[50px] sm:min-w-[170px]"
         />
       </div>
-      <section className="mt-12 flex flex-wrap gap-4">
+      <section className="mt-12 flex flex-wrap gap-4"> 
         {result.users.length > 0 ? (
           result?.users.map((user) => <UserCard key={user._id} user={user} />)
         ) : (

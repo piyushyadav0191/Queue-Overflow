@@ -1,7 +1,8 @@
 import User from "@/database/user.model";
 import { connectToDatabase } from "../mongoose";
+import Tag from "@/database/tags.model";
 
-export async function getTopInteractedTags(params) {
+export async function getTopInteractedTags(params: any) {
   try {
     await connectToDatabase();
 
@@ -21,4 +22,16 @@ export async function getTopInteractedTags(params) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export async function getAllTags(params: any) {
+try {
+  await connectToDatabase()
+  const tags = await Tag.find({})
+  return {tags}
+
+} catch (error) {
+  console.log(error)
+}
+
 }

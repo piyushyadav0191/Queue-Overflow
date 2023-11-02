@@ -57,3 +57,15 @@ export async function createQuestion(params: any) {
     console.log(error, "error creating question");
   }
 }
+
+export async function getQuestionById(params: any){
+  try {
+    await connectToDatabase()
+    const {questionId} = params
+    const question = await Question.findById(questionId).populate({path: "tags", model: Tag, select: '_id name'}).populate({path: "author", model: User, select: '_id clerkId name picture'})
+
+    return question
+  } catch (error) {
+    console.log(error)
+  }
+}
