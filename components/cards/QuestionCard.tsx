@@ -13,7 +13,7 @@ type Props = {
     name: string;
     picture: string;
   };
-  upvotes: number;
+  upvotes: string[];
   views: number;
   answers: Array<Object>;
   createdAt: string;
@@ -62,7 +62,7 @@ const QuestionCard = ({
         <Metric
           imgUrl={"/images/heart.svg"}
           alt="Upvotes"
-          value={upvotes}
+          value={upvotes.length}
           title="Votes"
           textStyles={"font-medium flex  text-black dark:text-gray-300 "}
           isAuthor={false}

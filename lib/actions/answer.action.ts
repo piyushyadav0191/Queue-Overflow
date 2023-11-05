@@ -11,7 +11,7 @@ export async function createAnswer(params: any) {
 
     const { content, author, question, path } = params;
 
-    const newAnswer = await  Answer.create({
+    const newAnswer = await Answer.create({
       content,
       author,
       question,
@@ -35,8 +35,48 @@ export async function getAllAnswers(params: any) {
       .populate("author", "_id clerkId name picture")
       .sort({ createdAt: -1 });
 
-      return {answers}
+    return { answers };
   } catch (error) {
     console.log(error);
   }
+}
+
+export async function upvoteAnswer(params: any) {
+  await connectToDatabase();
+  const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
+
+  let updateQuery = {};
+  if (hasupVoted) {
+    updateQuery = { $pull: { upvotes: userId } };
+  } else if (hasdownVoted) {
+    updateQuery = { $pull: { downvotes: userId }, $push: { upvotes: userId } };
+  } else {
+    updateQuery = { $addToSet: { upvotes: userId } };
+  }
+  const answer = await Answer.findByIdAndUpdate(answerId, updateQuery, {
+    new: true,
+  });
+  if (!answer) throw new Error("answer not found");
+
+  revalidatePath(path);
+}
+
+export async function downVotesAnswer(params: any) {
+  await connectToDatabase();
+  const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
+
+  let updateQuery = {};
+  if (hasdownVoted) {
+    updateQuery = { $pull: { downvotes: userId } };
+  } else if (hasupVoted) {
+    updateQuery = { $pull: { upvotes: userId }, $push: { downvotes: userId } };
+  } else {
+    updateQuery = { $addToSet: { downvotes: userId } };
+  }
+  const answer = await Answer.findByIdAndUpdate(answerId, updateQuery, {
+    new: true,
+  });
+  if (!answer) throw new Error("answer not found");
+
+  revalidatePath(path);
 }

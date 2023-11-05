@@ -33,7 +33,7 @@ const page = async ({ params, searchParams }: any) => {
             </p>
           </Link>
           <div className="flex justify-end">
-            <Votes type="question" itemId={JSON.stringify(result._id)} userId={JSON.stringify(mongoUser._id)} upvotes={result.upvotes.length} hasupVoted={result.upvotes.includes(mongoUser._id)} downVotes={result.downvotes.length} hasdownVoted={result.downvotes.includes(mongoUser._id)} hasSaved={mongoUser?.saved.includes(result._id)} />
+            <Votes type="Question" itemId={JSON.stringify(result._id)} userId={JSON.stringify(mongoUser._id)} upvotes={result.upvotes.length} hasupVoted={result.upvotes.includes(mongoUser._id)} downVotes={result.downvotes.length} hasdownVoted={result.downvotes.includes(mongoUser._id)} hasSaved={mongoUser?.saved.includes(result._id)} />
           </div>
         </div>
         <h2 className='font-semibold text-left mt-3.5 text-2xl w-full'>

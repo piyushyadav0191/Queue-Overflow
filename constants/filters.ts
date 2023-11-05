@@ -16,3 +16,9 @@ export const AnswersFilters = [
   { name: "Most Recent", value: "mostrecent" },
   { name: "Oldest", value: "oldest" },
 ];
+export const QuestionFilters = [
+  { name: "Newest", value: "newest" },
+  { name: "Recommended", value: "recommended" },
+  { name: "Frequent", value: "frequent" },
+  { name: "Unanswered", value: "unanswered" },
+];

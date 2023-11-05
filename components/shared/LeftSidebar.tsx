@@ -23,11 +23,10 @@ const LeftSidebar = (props: Props) => {
             <Link
               key={item.route}
               href={item.route}
-              className={`${
-                isActive
-                  ? " bg-primary-500 rounded-lg text-light-900"
-                  : "text-dark-300 dark:text-light-900"
-              } flex items-center justify-start gap-4 bg-transparent p-4`}
+              className={`${isActive
+                ? " rounded-lg text-primary-500 dark:text-primary-500 bg-primary-50 dark:bg-primary-900 hover:bg-primary-50 dark:hover:bg-primary-900 "
+                : "text-dark-300 dark:text-primary-500 hover:text-primary-500 dark:hover:text-primary-500"
+                } flex items-center justify-start gap-4 bg-transparent p-4`}
             >
               <Image
                 src={item.imgUrl}
@@ -37,11 +36,10 @@ const LeftSidebar = (props: Props) => {
                 className={`${isActive ? "" : "dark:invert "}`}
               />
               <p
-                className={`${
-                  isActive
-                    ? "font-semibold max-lg:hidden "
-                    : "font-medium max-lg:hidden"
-                }`}
+                className={`${isActive
+                  ? "font-semibold max-lg:hidden "
+                  : "font-medium max-lg:hidden"
+                  }`}
               >
                 {item.label}
               </p>
