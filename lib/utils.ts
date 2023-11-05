@@ -40,3 +40,14 @@ export const getTimeStamp = (createdAt: string): string => {
     return `${years} year${years > 1 ? "s" : ""} ago`;
   }
 };
+
+// get js data object as paramter and return a joineddate (just a month and year)
+
+export const getJoinedDate = (createdAt: string): string => {
+  const createdAtDate: Date = new Date(createdAt);
+  const month: string = createdAtDate.toLocaleString("default", {
+    month: "long",
+  });
+  const year: number = createdAtDate.getFullYear();
+  return `${month} ${year}`;
+};
