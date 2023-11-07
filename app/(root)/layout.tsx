@@ -1,4 +1,4 @@
-"use client";
+
 
 import LeftSidebar from "@/components/shared/LeftSidebar";
 import RIghtSidebar from "@/components/shared/RIghtSidebar";

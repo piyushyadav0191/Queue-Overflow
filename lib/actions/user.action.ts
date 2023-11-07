@@ -172,3 +172,32 @@ export async function getUserQuestion(params: any) {
     console.log(error);
   }
 }
+
+export async function getUserAnswers(params: any) {
+  try {
+    await connectToDatabase();
+    const { userId, page = 1, pageSize = 10 } = params;
+    const totalAnswers = await Answer.countDocuments({ author: userId });
+    const userAnswers = await Answer.find({ author: userId })
+      .sort({ upvotes: -1 })
+      .populate("question", "_id title")
+      .populate("author", "_id name clerkId picture");
+
+    return { answers: userAnswers, totalAnswers };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getHotQuestions() {
+  try {
+    await connectToDatabase();
+    const hotQuestions = await Question.find({})
+      .sort({ views: -1, upvotes: -1 })
+      .limit(5);
+
+    return hotQuestions;
+  } catch (error) {
+    console.log(error);
+  }
+}

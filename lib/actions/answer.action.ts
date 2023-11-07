@@ -4,6 +4,8 @@ import Answer from "@/database/answer.model";
 import { connectToDatabase } from "../mongoose";
 import Question from "@/database/question.model";
 import { revalidatePath } from "next/cache";
+import Tag from "@/database/tags.model";
+import Interaction from "@/database/interaction.model";
 
 export async function createAnswer(params: any) {
   try {
@@ -79,4 +81,27 @@ export async function downVotesAnswer(params: any) {
   if (!answer) throw new Error("answer not found");
 
   revalidatePath(path);
+}
+
+export async function deleteAnswer(params: any) {
+  try {
+    await connectToDatabase();
+    const { answersId, path } = params;
+
+    const answer = await Answer.findById(answersId);
+
+    if (!answer) throw new Error("Answer not found");
+
+    await Answer.deleteOne({ _id: answersId });
+    await Question.updateMany(
+      { _id: answer.question },
+      { $pull: { answers: answersId } }
+    );
+
+    await Interaction.deleteMany({ answer: answersId });
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+  }
 }
