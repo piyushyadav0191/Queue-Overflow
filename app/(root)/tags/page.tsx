@@ -1,20 +1,21 @@
 import Filters from "@/components/shared/Filters";
 import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
-import {  UserFilters } from "@/constants/filters";
+import { TagFilters } from "@/constants/filters";
 import { getAllTags } from "@/lib/actions/tag.action";
 import Link from "next/link";
 import React from "react";
 
-type Props = {};
+const page = async ({ searchParams }: any) => {
+  const result = await getAllTags({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter
+  })
 
-const page = async (props: Props) => {
-  const result = await getAllTags({})
-  
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
-        <h1 className="font-bold text-3xl">All Users</h1>
+        <h1 className="font-bold text-3xl">All Tags</h1>
       </div>
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchbar
@@ -25,15 +26,15 @@ const page = async (props: Props) => {
           otherClasses="flex-1"
         />
         <Filters
-          filters={UserFilters}
+          filters={TagFilters}
           otherClasses="min-h-[50px] sm:min-w-[170px]"
         />
       </div>
-      <section className="mt-12 flex flex-wrap gap-4"> 
+      <section className="mt-12 flex flex-wrap gap-4">
         {result.tags.length > 0 ? (
           result?.tags.map((tag) => (
             <Link href={`/tags/${tag._id}`} key={tag._id} >
-              <article className="flex w-full flex-col rounded-2xl border px-8 py-10 sm:w-[260px">
+              <article className="flex w-full flex-col rounded-2xl border px-8 py-10 sm:w-[260px dark:bg-gray-800">
                 <div className="w-fit rounded-sm px-5 py-1.5">
                   <p>
                     {tag.name}
@@ -47,7 +48,7 @@ const page = async (props: Props) => {
           )
           )
         ) : (
-         <NoResult title="No Tags found" description="It looks like there are no tags found" link="/ask-question" linkTitle="Ask a question"  />
+          <NoResult title="No Tags found" description="It looks like there are no tags found" link="/ask-question" linkTitle="Ask a question" />
         )}
       </section>
     </>

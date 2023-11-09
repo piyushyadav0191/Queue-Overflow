@@ -57,7 +57,7 @@ const page = async ({ params: { id }, searchParams }: Props) => {
           </SignedIn>
         </div>
       </div>
-      <Stats totalQuestion={userInfo?.totalQuestions} totalAnswer={userInfo?.totalAnswers} />
+      <Stats reputation={userInfo?.reputation} totalQuestion={userInfo?.totalQuestions} totalAnswer={userInfo?.totalAnswers} badges={userInfo?.badgeCounts} />
       <div className="mt-10 flex gap-10">
         <Tabs defaultValue="top-posts" className="flex-1">
           <TabsList className='min-h-[42px] p-1'>

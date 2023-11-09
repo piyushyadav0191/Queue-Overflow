@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { profileSchema } from '@/lib/validations'
 import { usePathname, useRouter } from 'next/navigation'
 import { updateUser } from '@/lib/actions/user.action'
+import { toast } from 'sonner'
 
 type Props = {
   clerkId: string
@@ -55,8 +56,10 @@ const Profile = ({ clerkId, user }: Props) => {
         },
         path: pathname
       })
+      toast.success("Profile updated successfully")
       router.back()
     } catch (error) {
+      toast.error("Something went wrong")
       console.log(error)
     } finally {
       setIsSubmitting(false)

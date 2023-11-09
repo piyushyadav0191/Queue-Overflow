@@ -6,6 +6,7 @@ import { toggleSaveQuestion } from '@/lib/actions/user.action'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
+import { toast } from 'sonner'
 
 type Props = {
   type: string
@@ -29,9 +30,10 @@ const Votes = ({ downVotes, hasdownVoted, hasupVoted, itemId, type, upvotes, use
       questionId: JSON.parse(itemId),
       path: pathname
     })
+    return toast.success(`Question ${hasSaved ? "Unsaved" : "Saved"}   successfully`)
   }
   const handleVote = async (action: string) => {
-    if (!userId) return
+    if (!userId) return toast.error("You need to login to vote")
 
     if (action === 'upvote') {
       if (type === "Question") {
@@ -49,7 +51,7 @@ const Votes = ({ downVotes, hasdownVoted, hasupVoted, itemId, type, upvotes, use
           path: pathname
         })
       }
-      return
+      return toast.info(`Upvoted ${hasupVoted ? "Removed" : "Successfully"}`)
     }
     if (action === 'downvote') {
       if (type === "Question") {
@@ -68,7 +70,7 @@ const Votes = ({ downVotes, hasdownVoted, hasupVoted, itemId, type, upvotes, use
         path: pathname
       })
     }
-    return
+    return toast.info(`Downvoted ${hasdownVoted ? "Remove" : "Successfully"}`)
   }
 
   useEffect(() => {
@@ -82,14 +84,14 @@ const Votes = ({ downVotes, hasdownVoted, hasupVoted, itemId, type, upvotes, use
     <div className='flex gap-6'>
       <div className="flex justify-center gap-2.5">
         <div className="flex justify-center gap-1.5">
-          <Image src={hasupVoted ? "/images/upvote.svg" : "/images/upvotes.svg"} height={18} width={18} alt='upvotes' className='cursor-pointer' onClick={() => { handleVote("upvote") }} />
+          <Image src={hasupVoted ? "/images/upvotes.svg" : "/images/upvote.svg"} height={18} width={18} alt='upvotes' className='cursor-pointer' onClick={() => { handleVote("upvote") }} />
           <div className='flex justify-center min-[18px] rounded-sm p-1'>
             <p className=''>
               {upvotes}
             </p>
           </div>
           <div className="flex justify-center gap-1.5">
-            <Image src={hasupVoted ? "/images/downvote.svg" : "/images/downvotes.svg"} height={18} width={18} alt='downvotes' className='cursor-pointer' onClick={() => { handleVote("downvote") }} />
+            <Image src={hasupVoted ? "/images/downvotes.svg" : "/images/downvote.svg"} height={18} width={18} alt='downvotes' className='cursor-pointer' onClick={() => { handleVote("downvote") }} />
             <div className='flex justify-center min-[18px] rounded-sm p-1'>
               <p className=''>
                 {downVotes}
@@ -97,7 +99,7 @@ const Votes = ({ downVotes, hasdownVoted, hasupVoted, itemId, type, upvotes, use
             </div>
           </div>
         </div>
-        {type === "Question" && <Image src={hasSaved ? "/images/star-filled.svg" : "/images/star.svg"} width={18} height={18} className='cursor-pointer' onClick={handleSave} alt='star' />}
+        {type === "Question" && <Image src={hasSaved ? "/images/star-filled.svg" : "/images/star.svg"} width={20} height={20} className='cursor-pointer' onClick={handleSave} alt='star' />}
       </div>
     </div>
   )

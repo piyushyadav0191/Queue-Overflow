@@ -6,12 +6,14 @@ import { QuestionFilters } from "@/constants/filters";
 import { getSavedQuestion } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
 
-const page = async () => {
+const page = async ({ searchParams }: any) => {
   const { userId } = auth()
   if (!userId) return null
 
   const result = await getSavedQuestion({
-    clerkId: userId
+    clerkId: userId,
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
   });
 
   return (

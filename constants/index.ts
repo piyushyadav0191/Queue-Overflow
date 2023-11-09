@@ -21,11 +21,6 @@ export const sidebbarLinks = [
     label: "Collections",
   },
   {
-    imgUrl: "/images/suitcase.svg",
-    route: "/jobs",
-    label: "Find Jobs",
-  },
-  {
     imgUrl: "/images/tag.svg",
     route: "/tags",
     label: "Tags",
@@ -37,7 +32,35 @@ export const sidebbarLinks = [
   },
   {
     imgUrl: "/images/question.svg",
-    route: "/ask-questions",
+    route: "/ask-question",
     label: "Ask a question",
   },
 ];
+
+export const BADGE_CRITERA = {
+  QUESTION_COUNT: {
+    BRONZE: 10,
+    SILVER: 50,
+    GOLD: 100,
+  },
+  ANSWER_COUNT: {
+    BRONZE: 10,
+    SILVER: 50,
+    GOLD: 100,
+  },
+  QUESTION_UPVOTES: {
+    BRONZE: 10,
+    SILVER: 50,
+    GOLD: 100,
+  },
+  ANSWER_UPVOTES: {
+    BRONZE: 10,
+    SILVER: 50,
+    GOLD: 100,
+  },
+  TOTAL_VIEWS: {
+    BRONZE: 10,
+    SILVER: 50,
+    GOLD: 100,
+  },
+};

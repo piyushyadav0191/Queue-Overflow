@@ -21,3 +21,9 @@ Node
 MongoDB
 clerk
 web hooks
+filterization
+
+todo
+pagination
+abstraction to search globally in any type or any model
+reputation algo

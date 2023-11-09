@@ -52,13 +52,12 @@ const Answers = ({ authorId, question, questionId }: Props) => {
     }
   }
 
+
   return (
     <div>
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center sm:gap-2 mt-3">
         <h4 className="font-semibold">Write your answer</h4>
-        <Button onClick={() => { }} className="gap-1.5 rounded-md px-4 py-2.5 text-primary-500 shadow-none dark:text-primary-500">
-          Generate an AI Answer
-        </Button>
+
       </div>
 
       <Form {...form}>

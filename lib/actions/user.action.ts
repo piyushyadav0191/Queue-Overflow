@@ -7,13 +7,40 @@ import Question from "@/database/question.model";
 import Tag from "@/database/tags.model";
 import { FilterQuery } from "mongoose";
 import Answer from "@/database/answer.model";
+import { assignBadges } from "../utils";
 
 export async function getAllUsers(params: any) {
   try {
     await connectToDatabase();
-    // const {page =1, pageSize =20, filter, searchQuery} = params
+    const { searchQuery, filter } = params;
 
-    const users = await User.find({}).sort({ createdAt: -1 });
+    const query: FilterQuery<typeof User> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { name: { $regex: new RegExp(searchQuery, "i") } },
+        { username: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
+
+    let sortOptions = {};
+
+    switch (filter) {
+      case "newuser":
+        sortOptions = { joinedAt: -1 };
+        break;
+      case "oldusers":
+        sortOptions = { joinedAt: 1 };
+        break;
+      case "topcontributers":
+        sortOptions = { reputation: -1 };
+        break;
+      default:
+        sortOptions = { createdAt: -1 };
+        break;
+    }
+
+    const users = await User.find(query).sort(sortOptions);
     return { users };
   } catch (error) {
     console.log(error, "error getting user by id");
@@ -118,11 +145,34 @@ export async function getSavedQuestion(params: any) {
       ? { title: { $regex: new RegExp(searchQuery, "i") } }
       : {};
 
+    let sortOptions = {};
+
+    switch (filter) {
+      case "mostrecent":
+        sortOptions = { createdAt: -1 };
+        break;
+      case "oldest":
+        sortOptions = { createdAt: 1 };
+        break;
+      case "mostvotes":
+        sortOptions = { upvotes: -1 };
+        break;
+      case "mostviewed":
+        sortOptions = { views: -1 };
+        break;
+      case "mostanswered":
+        sortOptions = { answers: -1 };
+        break;
+      default:
+        sortOptions = { createdAt: -1 };
+        break;
+    }
+
     const user = await User.findOne({ clerkId }).populate({
       path: "saved",
       match: query,
       options: {
-        sort: { createdAt: -1 },
+        sort: sortOptions,
       },
       populate: [
         { path: "tags", model: Tag, select: "_id name" },
@@ -151,7 +201,38 @@ export async function getUserInfo(params: any) {
     const totalQuestions = await Question.countDocuments({ author: user._id });
     const totalAnswers = await Answer.countDocuments({ author: user._id });
 
-    return { user, totalQuestions, totalAnswers };
+    const [questionUpvotes] = await Question.aggregate([
+      { $match: { author: user._id } },
+      { $project: { _id: 0, upvotes: { $size: "$upvotes" } } },
+      { $group: { _id: null, totalUpvotes: { $sum: "$upvotes" } } },
+    ]);
+    const [answerUpvotes] = await Answer.aggregate([
+      { $match: { author: user._id } },
+      { $project: { _id: 0, upvotes: { $size: "$upvotes" } } },
+      { $group: { _id: null, totalUpvotes: { $sum: "$upvotes" } } },
+    ]);
+    const [questionViews] = await Answer.aggregate([
+      { $match: { author: user._id } },
+      { $group: { _id: null, totalViews: { $sum: "$views" } } },
+    ]);
+
+    const criteria = [
+      { type: "QUESTION_COUNT", count: totalQuestions },
+      { type: "ANSWER_COUNT", count: totalAnswers },
+      { type: "QUESTION_UPVOTES", count: questionUpvotes?.totalUpvotes || 0 },
+      { type: "ANSWER_UPVOTES", count: answerUpvotes?.totalUpvotes || 0 },
+      { type: "TOTAL_VIEWS", count: questionViews?.totalViews || 0 },
+    ];
+
+    const badgeCounts = assignBadges({ criteria });
+
+    return {
+      user,
+      totalQuestions,
+      totalAnswers,
+      badgeCounts,
+      reputation: user.reputation,
+    };
   } catch (error) {
     console.log(error);
   }
@@ -163,7 +244,7 @@ export async function getUserQuestion(params: any) {
     const { userId, page = 1, pageSize = 10 } = params;
     const totalQuestions = await Question.countDocuments({ author: userId });
     const userQuestions = await Question.find({ author: userId })
-      .sort({ views: -1, upvotes: -1 })
+      .sort({ createdAt: -1, views: -1, upvotes: -1 })
       .populate("tags", "_id name")
       .populate("author", "_id name clerkId picture");
 

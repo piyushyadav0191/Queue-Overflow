@@ -37,7 +37,7 @@ const QuestionCard = ({
 
   const showActionsButton = clerkId && clerkId === author.clerkId;
   return (
-    <div className="card-wrapper p-9 sm:px-11 rounded-[10px] dark:shadow-dark-100 shadow-dark-400  border-primary-500 border-4">
+    <div className="card-wrapper p-9 sm:px-11 rounded-[10px] dark:shadow-dark-100 shadow-dark-400  border-primary-500 border-4 dark:bg-gray-800">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
         <div>
           <span className="line-clamp-1 flex sm:hidden">

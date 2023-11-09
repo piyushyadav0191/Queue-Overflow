@@ -10,6 +10,12 @@ export const UserFilters = [
   { name: "Old Users", value: "oldusers" },
   { name: "Top contributers", value: "topcontributers" },
 ];
+export const TagFilters = [
+  { name: "popular", value: "popular" },
+  { name: "recent", value: "recent" },
+  { name: "name", value: "name" },
+  { name: "old", value: "old" },
+];
 export const AnswersFilters = [
   { name: "Highest upvotes", value: "highestupvotes" },
   { name: "Lowest upvotes", value: "lowestupvotes" },
@@ -17,8 +23,15 @@ export const AnswersFilters = [
   { name: "Oldest", value: "oldest" },
 ];
 export const QuestionFilters = [
-  { name: "Newest", value: "newest" },
-  { name: "Recommended", value: "recommended" },
-  { name: "Frequent", value: "frequent" },
-  { name: "Unanswered", value: "unanswered" },
+  { name: "Most recent", value: "mostrecent" },
+  { name: "Oldest", value: "oldest" },
+  { name: "Most Votes", value: "mostvotes" },
+  { name: "Most Viewed", value: "mostviewed" },
+  { name: "Most answered", value: "mostanswered" },
+];
+export const GlobalSearchFilters = [
+  { name: "Question", value: "question" },
+  { name: "Answer", value: "answer" },
+  { name: "User", value: "user" },
+  { name: "Tag", value: "tag" },
 ];

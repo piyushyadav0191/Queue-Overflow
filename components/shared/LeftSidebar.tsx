@@ -34,8 +34,8 @@ const LeftSidebar = (props: Props) => {
               key={item.route}
               href={item.route}
               className={`${isActive
-                ? " rounded-lg text-primary-500 dark:text-primary-500 bg-primary-50 dark:bg-primary-900 hover:bg-primary-50 dark:hover:bg-primary-900 "
-                : "text-dark-300 dark:text-primary-500 hover:text-primary-500 dark:hover:text-primary-500"
+                ? " rounded-lg bg-orange-600 "
+                : ""
                 } flex items-center justify-start gap-4 bg-transparent p-4`}
             >
               <Image
@@ -60,14 +60,14 @@ const LeftSidebar = (props: Props) => {
       <SignedOut>
         <div className="flex flex-col gap-3">
           <Link href={"/sign-in"}>
-            <Button className="min-h-[41px] w-full bg-slate-800 rounded-lg px-4 py-3 shadow-none ">
-              <span className="text-primary-500">Log in</span>
+            <Button className="min-h-[41px] w-full text-black dark:text-white dark:border border-2 font-bold rounded-lg px-4 py-3 shadow-none ">
+              <span className="text-black dark:text-white">Log in</span>
             </Button>
           </Link>
 
           <Link href={"/sign-up"}>
             <Button className="min-h-[41px] w-full bg-slate-600 rounded-lg px-4 py-3 shadow-none ">
-              <span className="text-primary-500">Sign up</span>
+              <span className="text-white">Sign up</span>
             </Button>
           </Link>
         </div>

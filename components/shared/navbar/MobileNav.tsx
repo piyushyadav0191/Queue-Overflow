@@ -26,11 +26,10 @@ const NavContent = () => {
           <SheetClose asChild key={item.route}>
             <Link
               href={item.route}
-              className={`${
-                isActive
-                  ? " bg-primary-500 rounded-lg text-light-900"
+              className={`${isActive
+                  ? " bg-orange-500 dark:bg-orange-500-500 rounded-lg text-light-900"
                   : "text-dark-300 dark:text-light-900"
-              } flex items-center justify-start gap-4 bg-transparent p-4`}
+                } flex items-center justify-start gap-4 bg-transparent p-4`}
             >
               <Image
                 src={item.imgUrl}

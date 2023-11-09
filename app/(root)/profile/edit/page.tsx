@@ -1,10 +1,11 @@
 import Profile from '@/components/forms/Profile'
 import { getUserById } from '@/lib/actions/user.action'
 import { auth } from '@clerk/nextjs'
+import { toast } from 'sonner'
 
 const page = async () => {
   const { userId } = auth()
-  if (!userId) return null
+  if (!userId) return toast.error("You need to login to view this page")
   const mongoUser = await getUserById({ userId })
 
   return (

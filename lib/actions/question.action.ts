@@ -7,14 +7,42 @@ import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
 import Answer from "@/database/answer.model";
 import Interaction from "@/database/interaction.model";
+import { FilterQuery } from "mongoose";
 
-export async function getQuestions() {
+export async function getQuestions(params: any) {
   try {
     await connectToDatabase();
-    const questions = await Question.find({})
+    const { searchQuery, filter } = params;
+
+    const query: FilterQuery<typeof Question> = {};
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: new RegExp(searchQuery, "i") } },
+        { content: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
+
+    let sortOptions = {};
+
+    switch (filter) {
+      case "newest":
+        sortOptions = { createdAt: -1 };
+        break;
+      case "frequent":
+        sortOptions = { views: -1 };
+        break;
+      case "unanswered":
+        query.answers = { $size: 0 };
+        break;
+      default:
+        sortOptions = { createdAt: -1 };
+        break;
+    }
+
+    const questions = await Question.find(query)
       .populate({ path: "tags", model: Tag })
       .populate({ path: "author", model: User })
-      .sort({ createdAt: -1 });
+      .sort(sortOptions);
     return { questions };
   } catch (error) {
     console.log(error, "error getting questions");
@@ -45,6 +73,15 @@ export async function createQuestion(params: any) {
     await Question.findByIdAndUpdate(question._id, {
       $push: { tags: { $each: tagsDocuments } },
     });
+
+    await Interaction.create({
+      user: author,
+      action: "ask_question",
+      question: question._id,
+      tags: tagsDocuments,
+    });
+
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
 
     revalidatePath(path);
   } catch (error) {
@@ -87,6 +124,14 @@ export async function upvoteQuestion(params: any) {
   });
   if (!question) throw new Error("Question not found");
 
+  await User.findByIdAndUpdate(userId, {
+    $inc: { reputation: hasupVoted ? -1 : 1 },
+  });
+
+  await User.findByIdAndUpdate(question.author, {
+    $inc: { reputation: hasupVoted ? -10 : 10 },
+  });
+
   revalidatePath(path);
 }
 export async function downVotesQuestion(params: any) {
@@ -106,6 +151,13 @@ export async function downVotesQuestion(params: any) {
   });
   if (!question) throw new Error("Question not found");
 
+  await User.findByIdAndUpdate(userId, {
+    $inc: { reputation: hasdownVoted ? -2 : 2 },
+  });
+
+  await User.findByIdAndUpdate(question.author, {
+    $inc: { reputation: hasdownVoted ? -10 : 10 },
+  });
   revalidatePath(path);
 }
 

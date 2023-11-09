@@ -7,10 +7,11 @@ import { getAllUsers } from "@/lib/actions/user.action";
 import Link from "next/link";
 import React from "react";
 
-type Props = {};
-
-const page = async (props: Props) => {
-  const result = await getAllUsers({});
+const page = async ({ searchParams }: any) => {
+  const result = await getAllUsers({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
+  });
 
   return (
     <>
@@ -30,8 +31,8 @@ const page = async (props: Props) => {
           otherClasses="min-h-[50px] sm:min-w-[170px]"
         />
       </div>
-      <section className="mt-12 flex flex-wrap gap-4"> 
-        {result.users.length > 0 ? (
+      <section className="mt-12 flex flex-wrap gap-4">
+        {result?.users.length > 0 ? (
           result?.users.map((user) => <UserCard key={user._id} user={user} />)
         ) : (
           <div className="mx-auto max-w-4xl text-center">

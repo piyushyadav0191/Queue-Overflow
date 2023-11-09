@@ -16,12 +16,14 @@ const StatsCard = ({ imgUrl, value, title }: { imgUrl: string, value: number, ti
 type Props = {
   totalQuestion: number | undefined
   totalAnswer: number | undefined
+  badges: any
+  reputation: number
 }
 
-const Stats = ({ totalAnswer, totalQuestion }: Props) => {
+const Stats = ({ totalAnswer, totalQuestion, badges, reputation }: Props) => {
   return (
     <div>
-      <h1 className='text-2xl font-bold mt-3'>Stats</h1>
+      <h1 className='text-2xl font-bold mt-3'>Stats - {reputation} </h1>
       <div className="mt-5 grid grid-cols-1 gap-5 xs:grid-cols-1 md:grid-cols-4">
         <div className="flex flex-wrap items-center justify-evenly gap-4 rounded-md border p-6 shadow-light-300 dark:shadow-dark-200">
           <div>
@@ -33,9 +35,9 @@ const Stats = ({ totalAnswer, totalQuestion }: Props) => {
             <p className="font-medium text-2l">Answers </p>
           </div>
         </div>
-        <StatsCard imgUrl={"/images/gold-mdedal.svg"} value={0} title="Gold badges" />
-        <StatsCard imgUrl={"/images/silver-mdedal.svg"} value={0} title="Silver badges" />
-        <StatsCard imgUrl={"/images/bronze-mdedal.svg"} value={0} title="Bronze badges" />
+        <StatsCard imgUrl={"/images/gold-medal.svg"} value={badges.GOLD} title="Gold badges" />
+        <StatsCard imgUrl={"/images/silver-medal.svg"} value={badges.SILVER} title="Silver badges" />
+        <StatsCard imgUrl={"/images/bronze-medal.svg"} value={badges.BRONZE} title="Bronze badges" />
       </div>
     </div>
   )

@@ -46,7 +46,7 @@ const page = async ({ params, searchParams }: any) => {
           imgUrl={"/images/clock.svg"}
           alt="clock"
           value={`asked ${getTimeStamp(result.createdAt)}`}
-          title="Asked"
+          title=""
           textStyles={"font-medium flex  text-black dark:text-gray-300 "}
           isAuthor={false}
         />
